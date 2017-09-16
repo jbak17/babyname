@@ -1,19 +1,23 @@
 package controllers
 
 import javax.inject._
+
+import model.User
+import play.api.Logger
 import play.api.mvc._
+import services.UserService
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class HomeController @Inject()(cc: ControllerComponents, us: UserService) extends AbstractController(cc) {
 
   /*
   Home page where the user lands
    */
-  def index = Action {
+  def home = Action {
     Ok(views.html.index("Your new application is ready."))
   }
 
@@ -22,7 +26,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   with their partner.
    */
   def names(user: String) = Action {
-    Ok(views.html.nameGame("Ready to play"))
+    val usr: User = us.getUser(user)
+    Ok(views.html.names(usr))
   }
 
 }

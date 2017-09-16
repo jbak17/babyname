@@ -1,6 +1,6 @@
 package model
 
-case class User(name: String, email: String, partner: Option[String], nameList: List[String] = List.empty)
+case class User(name: String, email: String, partner: Option[String] = None: Option[String], nameList: List[String] = List.empty)
 
 object User {
 

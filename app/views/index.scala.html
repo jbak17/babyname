@@ -5,13 +5,20 @@
 @(message: String)
 
 
-@main("Welcome to Play") {
+@main(message) {
 
-  <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js"></script>
+    <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
 
-  <div>
-      <h1>REACT BABY</h1>
-  </div>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.31.3/react-bootstrap.min.js></script>
+    <script type="text/jsx" src="@routes.Assets.versioned("javascripts/login.jsx")"></script>
+
+    <div id="container">
+            <!-- This element's contents will be replaced with your component. -->
+    </div>
+
 
 }
