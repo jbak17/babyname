@@ -10,6 +10,12 @@ class UserService {
   val UserhashMap = HashMap.empty[String, User]
 
   val usr: User = User("Error", "Error")
+  val testUser = User("test", "test@test.com")
+  User.addToNameList(testUser, "one")
+  User.addToNameList(testUser, "two")
+  User.addToNameList(testUser, "three")
+  User.addToNameList(testUser, "Jane")
+  addUser(testUser)
 
   /*
   Adds new user to persistence layer

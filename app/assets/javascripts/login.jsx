@@ -9,6 +9,22 @@ function Splash(){
 
 }
 
+class LoginBox extends React.Component {
+
+    render(){
+        return (
+            <div>
+                <form action="login" method="post">
+                    <label>Email address</label>
+                    <input type="text" name="email"></input>
+
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+        )
+    }
+}
+
 class RegisterBox extends React.Component {
     render(){
         return (
@@ -53,7 +69,7 @@ class Box extends React.Component {
             return(
                 <div className="row">
                     <div><Splash/></div>
-                    <div>Login</div>
+                    <div><LoginBox/></div>
                 </div>
             )
         }
@@ -87,5 +103,7 @@ class Box extends React.Component {
 //========================
 let root = document.getElementById('container');
 
+let names = document.getElementByID('names');
 
-ReactDOM.render(<Box />, root);
+
+ReactDOM.render(<Box startList={names}/>, root);

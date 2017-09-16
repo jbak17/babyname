@@ -150,5 +150,6 @@ let root = document.getElementById('container');
 let nameOpts = ["Hayley", "Daphne", "Eva", "Nisma", "John", "Hassan", "Greg", "Craig"];
 let name = nameOpts[Math.floor(Math.random() * nameOpts.length)];
 let nameSuccess = [];
+let data = root.getAttribute('data');
 
-ReactDOM.render(<Box nameOption={name} nameList={nameOpts} partner={false}/>, root);
+ReactDOM.render(<Box nameOption={name} nameList={nameOpts} partner={false} nameSuccess={data.names}/>, root);

@@ -30,7 +30,9 @@ class UserController @Inject()(cc: ControllerComponents, us: UserService) extend
 
   }
 
-  def login(user: String) = Action { implicit request =>
+  def login = Action { implicit request =>
+    val user: String = request.body.asFormUrlEncoded.get("email").head
+
     if (us.userExists(user)){
       val u: User = us.getUser(user)
       Ok(views.html.names(u))

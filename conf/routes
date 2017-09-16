@@ -5,6 +5,7 @@
 # An example controller showing a sample home page
 
 POST    /newUser                    controllers.UserController.create
+POST    /login                      controllers.UserController.login
 
 GET     /                           controllers.HomeController.home
 
