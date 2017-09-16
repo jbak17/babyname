@@ -1,4 +1,4 @@
-name := """play-scala-starter-example"""
+name := """BabyName"""
 
 version := "1.0-SNAPSHOT"
 
@@ -11,3 +11,5 @@ scalaVersion := "2.12.2"
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0" % Test
 libraryDependencies += "com.h2database" % "h2" % "1.4.194"
+libraryDependencies += "org.webjars" % "bootstrap" % "3.3.7"
+
