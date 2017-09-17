@@ -7,6 +7,8 @@
 POST    /newUser                    controllers.UserController.create
 POST    /login                      controllers.UserController.login
 
+GET     /websocket                  controllers.WebsocketController.socket
+
 GET     /                           controllers.HomeController.home
 
 GET     /app/:user                  controllers.HomeController.names(user: String)
