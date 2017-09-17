@@ -11,11 +11,11 @@ class UserService {
 
   val usr: User = User("Error", "Error")
   val testUser = User("test", "test@test.com")
-  User.addToNameList(testUser, "one")
-  User.addToNameList(testUser, "two")
-  User.addToNameList(testUser, "three")
-  User.addToNameList(testUser, "Jane")
   addUser(testUser)
+  addNametoUser(testUser.email, "one")
+  addNametoUser(testUser.email, "two")
+  addNametoUser(testUser.email, "three")
+  addNametoUser(testUser.email, "Jane")
 
   /*
   Adds new user to persistence layer
@@ -38,4 +38,12 @@ class UserService {
       u)
       .getOrElse(usr)
   }
+
+  def addNametoUser(email: String, name: String ) = {
+    val oldlst = getUser(email)
+    removeUser(oldlst)
+    val newusr = User.addToNameList(oldlst, name)
+    addUser(newusr)
+  }
+
 }

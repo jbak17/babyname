@@ -3,7 +3,7 @@ package controllers
 import javax.inject._
 
 import model.User
-import play.api.Logger
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import services.UserService
 
@@ -27,7 +27,9 @@ class HomeController @Inject()(cc: ControllerComponents, us: UserService) extend
    */
   def names(user: String) = Action {
     val usr: User = us.getUser(user)
-    Ok(views.html.names(usr))
+    val json: JsValue = User.toJSONString(usr)
+
+    Ok(views.html.names(json))
   }
 
 }

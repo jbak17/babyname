@@ -4,6 +4,7 @@ import javax.inject._
 
 import model.User
 import play.api.Logger
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import services.UserService
 
@@ -23,7 +24,7 @@ class UserController @Inject()(cc: ControllerComponents, us: UserService) extend
 
     //todo: add some error checking here
     if (status) {
-      Ok(views.html.names(user))
+      Ok(views.html.names(User.toJSONString(user)))
     } else {
       Ok(views.html.index("Your new application is ready."))
     }
@@ -33,9 +34,9 @@ class UserController @Inject()(cc: ControllerComponents, us: UserService) extend
   def login = Action { implicit request =>
     val user: String = request.body.asFormUrlEncoded.get("email").head
 
+    //if exists forwards to controller.
     if (us.userExists(user)){
-      val u: User = us.getUser(user)
-      Ok(views.html.names(u))
+      Redirect(routes.HomeController.names(user))
     }
     //User doesn't exist
     else {Ok(views.html.index("Your new application is ready."))}

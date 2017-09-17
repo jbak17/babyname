@@ -103,7 +103,4 @@ class Box extends React.Component {
 //========================
 let root = document.getElementById('container');
 
-let names = document.getElementByID('names');
-
-
-ReactDOM.render(<Box startList={names}/>, root);
+ReactDOM.render(<Box />, root);

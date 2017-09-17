@@ -102,11 +102,12 @@ class Box extends React.Component {
 
     constructor(props) {
         super();
+        const userData = JSON.parse(props.input);
         this.state = {
             current: "Jane",
             options: props.nameList,
-            selected: [],
-            partner: props.partner
+            selected: userData.nameList,
+            partner: userData.partner
         };
         this.handleNameAccept = this.handleNameAccept.bind(this);
         this.handleNameReject = this.handleNameReject.bind(this);
@@ -152,4 +153,5 @@ let name = nameOpts[Math.floor(Math.random() * nameOpts.length)];
 let nameSuccess = [];
 let data = root.getAttribute('data');
 
-ReactDOM.render(<Box nameOption={name} nameList={nameOpts} partner={false} nameSuccess={data.names}/>, root);
+
+ReactDOM.render(<Box nameOption={name} nameList={nameOpts} partner={false} input={data}/>, root);
