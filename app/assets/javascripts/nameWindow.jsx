@@ -1,3 +1,14 @@
+
+class NameStorage {
+    constructor(){
+        this.names = []
+    }
+
+    receive(namelist){
+        this.names = namelist
+    }
+}
+
 /**
  * Our Comms object manages the websocket for us
  */
@@ -13,7 +24,11 @@ class Comms {
             // We're receiving User's as json:
             let msg = JSON.parse(m.data);
 
+            //update global variable with new information
+            shortList.receive(msg.shortList);
+
             console.log(msg)
+            rerender()
 
         };
 
@@ -35,15 +50,9 @@ class Comms {
 
 }
 
+const shortList = new NameStorage()
 const comms = new Comms();
 
-
-
-function partnerSelector(){
-    return(
-        <div><RegisterBox/></div>
-    )
-}
 
 class RegisterBox extends React.Component {
     constructor() {
@@ -68,7 +77,6 @@ class RegisterBox extends React.Component {
         );
     }
 }
-
 
 /*
 Props:
@@ -168,7 +176,7 @@ class Box extends React.Component {
             email: userData.email,
             partner: userData.partner,
             selected: userData.nameList,
-            shortlist: userData.shortList,
+            shortlist: shortList.names,
             current: "Jane",
             options: props.nameList
         };
@@ -214,7 +222,7 @@ class Box extends React.Component {
             <div className="row">
                 <div ><OptionsColumn name={this.state.current} acceptName={this.handleNameAccept} rejectName={this.handleNameReject} /></div>
                 <div ><NameColumn names={this.state.selected} /></div>
-                <div ><NameColumn names={this.state.shortlist} /></div>
+                <div ><NameColumn names={shortList.names} /></div>
             </div>
 
 
@@ -226,10 +234,9 @@ class Box extends React.Component {
 
 //==============================
 let root = document.getElementById('container');
-let nameOpts = ["Hayley", "Daphne", "Eva", "Nisma", "John", "Hassan", "Greg", "Craig"];
+let nameOpts = ["Sam", "Bob", "Hayley", "Daphne", "Eva", "Nisma", "Jane", "Juno", "Jeremiah", "Alice",  "John", "Hassan", "Greg", "Craig"];
 let name = nameOpts[Math.floor(Math.random() * nameOpts.length)];
-let nameSuccess = [];
-let data = root.getAttribute('data');
+data = root.getAttribute('data');
 
 //=========================================
 

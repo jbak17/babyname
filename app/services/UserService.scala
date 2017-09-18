@@ -13,12 +13,12 @@ class UserService {
 
   val UserhashMap = HashMap.empty[String, User]
 
-  val usr: User = User("Error", "Error", "error@error.com")
+  val usr: User = User("Error", "Error", "test@test.com")
   val testUser = User("test", "test@test.com", "random@random.com")
   addUser(testUser)
-  addNametoUser(testUser.email, "one")
-  addNametoUser(testUser.email, "two")
-  addNametoUser(testUser.email, "three")
+  addNametoUser(testUser.email, "Eva")
+  addNametoUser(testUser.email, "Bob")
+  addNametoUser(testUser.email, "Juno")
   addNametoUser(testUser.email, "Jane")
   //addPartner(testUser, User.generateId)
 
