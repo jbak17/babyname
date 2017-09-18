@@ -34,6 +34,8 @@ class RegisterBox extends React.Component {
                     <input type="text" name="name"></input>
                     <label >Email</label>
                     <input type="text" name="email"></input>
+                    <label >Partner's email</label>
+                    <input type="text" name="partner"></input>
                     <input type="submit" value="Submit" />
                 </form>
             </div>

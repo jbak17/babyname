@@ -26,6 +26,7 @@ class HomeController @Inject()(cc: ControllerComponents, us: UserService) extend
   with their partner.
    */
   def names(user: String) = Action {
+    for (n <- us.UserhashMap.keys) yield println(us.UserhashMap(n))
     val usr: User = us.getUser(user)
     val json: JsValue = User.toJSONString(usr)
 

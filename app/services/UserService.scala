@@ -1,21 +1,26 @@
 package services
 
+import javax.inject.Singleton
+
 import model.User
 
 import scala.util.Random
 import scala.collection.mutable.HashMap
 
+
+@Singleton
 class UserService {
 
   val UserhashMap = HashMap.empty[String, User]
 
-  val usr: User = User("Error", "Error")
-  val testUser = User("test", "test@test.com")
+  val usr: User = User("Error", "Error", "error@error.com")
+  val testUser = User("test", "test@test.com", "random@random.com")
   addUser(testUser)
   addNametoUser(testUser.email, "one")
   addNametoUser(testUser.email, "two")
   addNametoUser(testUser.email, "three")
   addNametoUser(testUser.email, "Jane")
+  //addPartner(testUser, User.generateId)
 
   /*
   Adds new user to persistence layer
@@ -39,11 +44,30 @@ class UserService {
       .getOrElse(usr)
   }
 
+  def hasShortlistedName(user: User, name: String): Boolean = {
+    user.nameList.contains(name)
+  }
+
+
+  def updateUser(old: User, replacement: User) = {
+    removeUser(old)
+    addUser(replacement)
+  }
+
+  /*
+  When a new name comes through the name is either added to the users
+  list of names, or the shortlist if their partner has also listed it.
+   */
   def addNametoUser(email: String, name: String ) = {
-    val oldlst = getUser(email)
-    removeUser(oldlst)
-    val newusr = User.addToNameList(oldlst, name)
-    addUser(newusr)
+    val olduser = getUser(email)
+    val nameOnPartnerList: Boolean = userExists(olduser.partner) && hasShortlistedName(getUser(olduser.partner), name)
+    val newusr = if (nameOnPartnerList) {
+      User.addToShortlist(olduser, name)
+    } else {
+      User.addToNameList(olduser, name)
+    }
+
+    updateUser(olduser, newusr)
   }
 
 }
