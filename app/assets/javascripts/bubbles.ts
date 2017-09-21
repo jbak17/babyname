@@ -15,7 +15,6 @@ class GameItem implements Drawable{
     x: number;
     y: number;
     r: number; //radius
-    stationary: boolean;
     step(){}
     draw(canvas){}
 }
@@ -35,33 +34,7 @@ class Bubble extends GameItem{
 
     step(){
         this.y += this.dy;
-        this.collision()
        }
-
-    bubblestop(){
-        this.stationary = true;
-        this.dy = 0;
-    }
-
-    collision(){
-        let contactY = this.y + this.radius; //end of bubble
-        //check for contact with other item.
-        let notMe = gameItems.filter(x => x.x != this.x && x.y != this.y)
-            .filter(x => x.stationary);
-
-        for (let i= 0; i< notMe.length; i++){
-            if (contactY <= notMe[i].y &&
-                contactY >= (notMe[i].y + notMe[i].r) &&
-                this.x > notMe[i].x &&
-                this.x < notMe[i].x+notMe[i].r){
-                this.bubblestop()
-            }
-        }
-        //check for contact with bottom of screen.
-        if( contactY > 300) {
-            this.bubblestop();
-        }
-    }
 
     draw(canvas: HTMLCanvasElement){
         ctx = canvas.getContext("2d");
@@ -78,33 +51,31 @@ let gameItems: Array<Bubble> = [];
 
 //creates a new bubble and adds to gameItems
 function bubbleMaker(){
-    for (let i = 0; i < 100; i++){
+    for (let i = 0; i < 50; i++){
         let w: number = Math.floor(Math.random()*canvas.width);
         let h: number = Math.floor(Math.random()*(-1000));
         gameItems.push(new Bubble(w, h))
     }
 }
-bubbleMaker()
+bubbleMaker();
 
-function draw(){
+function draw_bubbles(){
 
     //randomly create bubbles
-    // if (Math.random() < 0.01){
-    //     bubbleMaker()
-    //     console.log(gameItems.length)
-    // }
+    if (Math.random() < 0.01){
+        bubbleMaker();
+        console.log(gameItems.length)
+    }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     //things to draw
-    let moving = gameItems.filter(x => x.stationary == false);
-    moving.forEach(i => i.step());
+    gameItems.forEach(i => i.step());
     //update position on screen
     gameItems.forEach(_ => _.draw(canvas));
-    // for (let i=0; i<gameItems.length; i++){
-    //     gameItems[i].draw(canvas)
-    // }
+
+    gameItems = gameItems.filter(x => x.y < (canvas.height ));
 
     requestAnimationFrame(draw)
 }
 
-draw();
+draw_bubbles();

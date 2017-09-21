@@ -5,14 +5,14 @@ import javax.inject._
 import model.User
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
-import services.UserService
+import services.{NameService, UserService}
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents, us: UserService) extends AbstractController(cc) {
+class HomeController @Inject()(cc: ControllerComponents, us: UserService, ns: NameService) extends AbstractController(cc) {
 
   /*
   Home page where the user lands
@@ -30,7 +30,7 @@ class HomeController @Inject()(cc: ControllerComponents, us: UserService) extend
     val usr: User = us.getUser(user)
     val json: JsValue = User.toJSONString(usr)
 
-    Ok(views.html.names(json))
+    Ok(views.html.names(json, ns.names))
   }
 
 }

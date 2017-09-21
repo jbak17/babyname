@@ -11,16 +11,16 @@ import scala.collection.mutable.HashMap
 @Singleton
 class UserService {
 
-  val UserhashMap = HashMap.empty[String, User]
+  val names: List[String] = List(
+    "Amy", "Beatrice", "Christene", "Agnus",
+    "Narcisa", "Sharri", "Judith", "Chris",
+    "Shaimka", "Krishna", "Renaldo", "Ian",
+    "Carita", "Malka", "Malta", "Clemence",
+    "Lauralee", "Else", "Minh", "Bill", "Kareen",
+    "Ivana", "Wade", "Abram", "Abdi", "Mussa"
+  )
 
-  val usr: User = User("Error", "Error", "test@test.com")
-  val testUser = User("test", "test@test.com", "random@random.com")
-  addUser(testUser)
-  addNametoUser(testUser.email, "Eva")
-  addNametoUser(testUser.email, "Bob")
-  addNametoUser(testUser.email, "Juno")
-  addNametoUser(testUser.email, "Jane")
-  //addPartner(testUser, User.generateId)
+  val UserhashMap = HashMap.empty[String, User]
 
   /*
   Adds new user to persistence layer
@@ -48,7 +48,6 @@ class UserService {
     user.nameList.contains(name)
   }
 
-
   def updateUser(old: User, replacement: User) = {
     removeUser(old)
     addUser(replacement)
@@ -69,5 +68,22 @@ class UserService {
 
     updateUser(olduser, newusr)
   }
+
+  def makeUser(email: String, partner: String) = {
+    addUser(User(scala.util.Random.nextString(5), email, partner))
+    names.take(5).foreach(n => addNametoUser(email, n))
+  }
+
+  makeUser("fake@1.com", "fake@2.com")
+  makeUser("fake@2.com", "fake@1.com")
+
+  val usr: User = User("Error", "Error", "test@test.com")
+  val evaUser = User("Eva", "eva@babyname.com", "jarrod@babyname.com")
+  addUser(evaUser)
+  addNametoUser(evaUser.email, "Agnes")
+  addNametoUser(evaUser.email, "Chris")
+  addNametoUser(evaUser.email, "Juno")
+  addNametoUser(evaUser.email, "Jane")
+
 
 }

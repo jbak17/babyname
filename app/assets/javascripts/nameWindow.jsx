@@ -121,7 +121,7 @@ Props:
     value: String
  */
 function NameCard(props) {
-        console.log("namecard made");
+
     return (
         <li className="list-group-item"><button className="btn btn-info">
             {props.value}
@@ -184,6 +184,16 @@ class Box extends React.Component {
         this.handleNameReject = this.handleNameReject.bind(this);
     };
 
+
+    getNextName(){
+        let next_name = nameOpts[Math.floor(Math.random() * nameOpts.length)];
+        while (this.state.selected.includes(next_name)){
+            next_name = nameOpts[Math.floor(Math.random() * nameOpts.length)];
+        }
+        this.setState({
+            current: next_name
+        })
+    }
     /*
     Called when a user selects a name. We need to add the name to
     the list of accepted names and give the user a new name
@@ -192,17 +202,22 @@ class Box extends React.Component {
     handleNameAccept(name) {
         //add name to selected list
         let names = this.state.selected;
-        names.push(name);
-        this.setState({
-            selected: names,
-            current: nameOpts[Math.floor(Math.random() * nameOpts.length)]}
-        );
+        if (!names.includes(name)){
+            names.push(name);
+            this.setState({
+                selected: names}
+            );
+            this.getNextName()
 
-        comms.sendMessage(this.createStateJSON())
+            comms.sendMessage(this.createStateJSON())
+        }
+        else {
+            this.getNextName()
+        }
     }
 
     handleNameReject(){
-        this.setState({current: nameOpts[Math.floor(Math.random() * nameOpts.length)]})
+        this.getNextName()
     }
 
     createStateJSON(){
@@ -234,7 +249,14 @@ class Box extends React.Component {
 
 //==============================
 let root = document.getElementById('container');
-let nameOpts = ["Sam", "Bob", "Hayley", "Daphne", "Eva", "Nisma", "Jane", "Juno", "Jeremiah", "Alice",  "John", "Hassan", "Greg", "Craig"];
+let nameOpts = ["Sam", "Bob", "Hayley", "Daphne", "Eva",
+    "Nisma", "Jane", "Juno", "Jeremiah", "Alice",  "John",
+    "Hassan", "Greg", "Craig",     "Amy", "Beatrice",
+    "Christene", "Agnus", "Narcisa", "Sharri", "Judith",
+    "Chris", "Shaimka", "Krishna", "Renaldo", "Ian",
+    "Carita", "Malka", "Malta", "Clemence",
+    "Lauralee", "Else", "Minh", "Bill", "Kareen",
+    "Ivana", "Wade", "Abram", "Abdi", "Mussa"];
 let name = nameOpts[Math.floor(Math.random() * nameOpts.length)];
 data = root.getAttribute('data');
 
