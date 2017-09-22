@@ -105,6 +105,12 @@ class OptionsColumn extends React.Component {
         return (
             <div className="col-sm-4">
                 <div className="jumbotron">
+                    <h3>
+
+                        What do you think of:
+
+                    </h3>
+
                     <h2>{this.props.name}</h2>
                 </div>
                 <ul>
@@ -154,7 +160,9 @@ class NameColumn extends React.Component {
     }
 
     render(){
-            return (<div className="col-sm-4">
+            return (
+            <div className="col-sm-4">
+                <h2>{this.props.text}</h2>
                 <NameList names={this.props.names}/>
             </div>)
     }
@@ -204,6 +212,7 @@ class Box extends React.Component {
         let names = this.state.selected;
         if (!names.includes(name)){
             names.push(name);
+            localStorage.setItem("nameDB", names);
             this.setState({
                 selected: names}
             );
@@ -236,8 +245,8 @@ class Box extends React.Component {
         return (
             <div className="row">
                 <div ><OptionsColumn name={this.state.current} acceptName={this.handleNameAccept} rejectName={this.handleNameReject} /></div>
-                <div ><NameColumn names={this.state.selected} /></div>
-                <div ><NameColumn names={shortList.names} /></div>
+                <div ><NameColumn names={this.state.selected} text="You liked:" /></div>
+                <div ><NameColumn names={shortList.names} text="You both liked:"/></div>
             </div>
 
 
@@ -251,12 +260,13 @@ class Box extends React.Component {
 let root = document.getElementById('container');
 let nameOpts = ["Sam", "Bob", "Hayley", "Daphne", "Eva",
     "Nisma", "Jane", "Juno", "Jeremiah", "Alice",  "John",
-    "Hassan", "Greg", "Craig",     "Amy", "Beatrice",
-    "Christene", "Agnus", "Narcisa", "Sharri", "Judith",
-    "Chris", "Shaimka", "Krishna", "Renaldo", "Ian",
-    "Carita", "Malka", "Malta", "Clemence",
-    "Lauralee", "Else", "Minh", "Bill", "Kareen",
-    "Ivana", "Wade", "Abram", "Abdi", "Mussa"];
+    // "Hassan", "Greg", "Craig",     "Amy", "Beatrice",
+    // "Christene", "Agnus", "Narcisa", "Sharri", "Judith",
+    // "Chris", "Shaimka", "Krishna", "Renaldo", "Ian",
+    // "Carita", "Malka", "Malta", "Clemence",
+    // "Lauralee", "Else", "Minh", "Bill", "Kareen",
+    // "Ivana", "Wade", "Abram", "Abdi", "Mussa"
+];
 let name = nameOpts[Math.floor(Math.random() * nameOpts.length)];
 data = root.getAttribute('data');
 

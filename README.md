@@ -1,57 +1,61 @@
-[<img src="https://img.shields.io/travis/playframework/play-scala-starter-example.svg"/>](https://travis-ci.org/playframework/play-scala-starter-example)
+## Background
 
-# play-scala-starter-example
+This is an application for COSC360 using Play (Scala) for
+the backend and Reactjs for the front end.
 
-This is a starter application that shows how Play works.  Please see the documentation at https://www.playframework.com/documentation/latest/Home for more details.
+I had originally been working on a chess application,
+but was not able to get it into a functional state
+to be useful for a user. As such I switch to create
+a basic baby naming application to display the 
+technologies demonstrated in COSC360.
 
-## Running
+## App purpose
+The purpose of the application is to help expecting
+parents to choose a name for their baby. Each partner
+creates an account and provides the email address of 
+their partner. The app then links these two together.
 
-Run this using [sbt](http://www.scala-sbt.org/).  If you downloaded this project from http://www.playframework.com/download then you'll find a prepackaged version of sbt in the project directory:
+Each partner creates their own shortlist of names.
+When each partner has shortlisted the same name, that
+name appears in a column listing all the agreed names.
+In this way partners can find common ground, without
+even talking! Surely the basis of a happy relationship. 
 
-```
-sbt run
-```
+## Frontend
+React is used for two parts of the front end: the login
+and registration page (see login.jsx); and the lists of names 
+(nameWindow.jsx). The latter is discussed here. 
 
-And then go to http://localhost:9000 to see the running web application.
+The list of names is a bootstrap container of three
+columns: one is responsible for dealing with user input
+with buttons either accepting or rejecting a name. These
+columns are contained in a "Box" element for managing
+state. If a name is rejected a new name is suggested. If a name
+is accepted it is sent via a web socket. The web
+socket will respond with updated data which is then
+propagated by React to all the components. 
 
-There are several demonstration files available in this template.
+# Websocket
+A websocket (see nameWindow.jsx) is used to send JSON representation of users back
+and forward from the front- to back-end. Every time a name
+is selected the data is sent over the socket, updated in the server
+and then returned as an updated user instance. 
+ 
+# Canvas
+To demonstrate the use of the Canvas HTML element I created
+a simple display (bubbles.ts) that has black bubbles on a white background. 
 
-## Controllers
+## Backend
+Play for Scala is used as the application framework. 
 
-- HomeController.scala:
-
-  Shows how to handle simple HTTP requests.
-
-- AsyncController.scala:
-
-  Shows how to do asynchronous programming when handling a request.
-
-- CountController.scala:
-
-  Shows how to inject a component into a controller and use the component when
-  handling requests.
-
-## Components
-
-- Module.scala:
-
-  Shows how to use Guice to bind all the components needed by your application.
-
-- Counter.scala:
-
-  An example of a component that contains state, in this case a simple counter.
-
-- ApplicationTimer.scala:
-
-  An example of a component that starts when the application starts and stops
-  when the application stops.
-
-## Filters
-
-- Filters.scala:
-
-  Creates the list of HTTP filters used by your application.
-
-- ExampleFilter.scala
-
-  A simple filter that adds a header to every response.
+* Controllers: 
+   * UserController: registration and login functions
+   * HomeController: basic navigation routing
+   * WebsocketController: handles in/out for websocket
+* Model
+    * User: contains declaration and helpers on companion object.
+* Services
+    * UserService: works with user model for application specific functionality such as adding names, updating lists, etc. 
+   
+   
+  

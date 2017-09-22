@@ -2,8 +2,6 @@
 var canvas = <HTMLCanvasElement>document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-var colors: Array<String> = ["white", "green", "yellow", "blue", "black"];
-
 interface Drawable {
     draw(canvas)
 }
@@ -11,7 +9,7 @@ interface Drawable {
 /*
 General properties of all items. Necessary for collision detection.
  */
-class GameItem implements Drawable{
+class ScreenItem implements Drawable{
     x: number;
     y: number;
     r: number; //radius
@@ -19,7 +17,7 @@ class GameItem implements Drawable{
     draw(canvas){}
 }
 
-class Bubble extends GameItem{
+class Bubble extends ScreenItem{
     constructor (public x: number, public y: number){
         super()
     }
@@ -30,8 +28,6 @@ class Bubble extends GameItem{
     stationary: boolean = false;
     id: number = Math.floor(Math.random() * 100000);
 
-    color: String = colors[Math.floor(Math.random() * colors.length)];
-
     step(){
         this.y += this.dy;
        }
@@ -40,42 +36,42 @@ class Bubble extends GameItem{
         ctx = canvas.getContext("2d");
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
-        ctx.fillStyle = "green" ;
+        ctx.fillStyle = "black" ;
         ctx.fill();
         ctx.closePath();
     }
 }
 
-
-let gameItems: Array<Bubble> = [];
+let toDisplay: Array<Bubble> = [];
 
 //creates a new bubble and adds to gameItems
 function bubbleMaker(){
     for (let i = 0; i < 50; i++){
         let w: number = Math.floor(Math.random()*canvas.width);
         let h: number = Math.floor(Math.random()*(-1000));
-        gameItems.push(new Bubble(w, h))
+        toDisplay.push(new Bubble(w, h))
     }
 }
 bubbleMaker();
 
-function draw_bubbles(){
+function draw(){
 
     //randomly create bubbles
     if (Math.random() < 0.01){
         bubbleMaker();
-        console.log(gameItems.length)
-    }
+        }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle="#FFFFFF";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
     //things to draw
-    gameItems.forEach(i => i.step());
+    toDisplay.forEach(i => i.step());
     //update position on screen
-    gameItems.forEach(_ => _.draw(canvas));
+    toDisplay.forEach(_ => _.draw(canvas));
 
-    gameItems = gameItems.filter(x => x.y < (canvas.height ));
+    toDisplay = toDisplay.filter(x => x.y < (canvas.height ));
 
     requestAnimationFrame(draw)
 }
 
-draw_bubbles();
+draw();

@@ -45,27 +45,27 @@ class Name extends TextBanner{
 }
 
 //hold names to be added to banner.
-let NameList: Array<Name> = [];
+let bannerNameList: Array<Name> = [new Name("Hello")];
 
 
-let counter: number = 0;
+let bannerCounter: number = 0;
 
 function draw(){
     let shortList = [];
-    if (counter % SPACING == 0 && shortList.length != 0){
+    if (bannerCounter % SPACING == 0 && shortList.length != 0){
         let name: string = shortList[Math.floor(Math.random() * shortList.length)];
-        NameList.push(new Name(name))
+        bannerNameList.push(new Name(name))
     }
-    counter ++;
+    bannerCounter ++;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle="white";
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
     //things to draw
-    NameList.forEach(i => i.step());
+    bannerNameList.forEach(i => i.step());
     //update position on screen
-    NameList.forEach(_ => _.draw(canvas));
+    bannerNameList.forEach(_ => _.draw(canvas));
 
     requestAnimationFrame(draw)
 }
