@@ -43,7 +43,8 @@ and then returned as an updated user instance.
  
 # Canvas
 To demonstrate the use of the Canvas HTML element I created
-a simple display (bubbles.ts) that has black bubbles on a white background. 
+a simple display (bubbles.ts) that has black bubbles on a white background.
+The canvas display was written in typeScript.  
 
 ## Backend
 Play for Scala is used as the application framework. 
@@ -52,6 +53,7 @@ Play for Scala is used as the application framework.
    * UserController: registration and login functions
    * HomeController: basic navigation routing
    * WebsocketController: handles in/out for websocket
+   * ApiController: api services for this and other applications. 
 * Model
     * User: contains declaration and helpers on companion object.
 * Services
